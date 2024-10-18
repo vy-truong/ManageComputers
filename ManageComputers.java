@@ -288,13 +288,13 @@ public class ManageComputers {
         String[] validDesktopDisks = {"512", "1024"}; //valid desktop disk 
 
         // Get and validate CPU
-        DesktopCPU = getValidatedInput(s, "Enter CPU (i5 or i7): ", validDesktopCPUs, "Invalid CPU. Allowed values: i5 or i7.");
+        DesktopCPU = getValidatedInput(s, "Enter CPU (i5 or i7): ", validDesktopCPUs, "Invalid CPU. Please choose between: i5 or i7.");
 
         // Get and validate RAM
-        DesktopRAM = getValidatedInput(s, "Enter RAM size (16 or 32 GB): ", validDesktopRAMs, "Invalid RAM size. Allowed values: 16 or 32.");
+        DesktopRAM = getValidatedInput(s, "Enter RAM size (16 or 32 GB): ", validDesktopRAMs, "Invalid RAM size. Please choose between: 16 or 32.");
 
         // Get and validate Disk
-        DesktopDisk = getValidatedInput(s, "Enter Disk size (512 or 1024 GB): ", validDesktopDisks, "Invalid Disk size. Allowed values: 512 or 1024.");
+        DesktopDisk = getValidatedInput(s, "Enter Disk size (512 or 1024 GB): ", validDesktopDisks, "Invalid Disk size. Please choose between: 512 or 1024.");
 
         return new Computer(DesktopCPU, DesktopRAM, DesktopDisk);
 
