@@ -276,22 +276,35 @@ public class ManageComputers {
     //Helper method to get data common to Laptop and Desktop (CPU, RAM and disk) objects. Returns a Computer-type object
     //holding these values as attribues
     private static Computer getComputerData(Scanner s) {
-        String CPU="";
-        String RAM="";
-        String disk="";
 
-        System.out.print("Enter CPU:");
-        CPU = s.nextLine();
+        //Task 1: Whitelist for Desktop 
+        String DesktopCPU = "";
+        String DesktopRAM = "";
+        String DesktopDisk = "";
 
-        System.out.print("Enter RAM:");
-        RAM = s.nextLine();
+        // Define valid option for Desktop 
+        String[] validDesktopCPUs = {"i5", "i7"}; //Valid desktop cpu
+        String[] validDesktopRAMs = {"16", "32"}; // valid desktop ram
+        String[] validDesktopDisks = {"512", "1024"}; //valid desktop disk 
 
-        System.out.print("Enter Disk:");
-        disk = s.nextLine();
+        // Get and validate CPU
+        DesktopCPU = getValidatedInput(s, "Enter CPU (i5 or i7): ", validDesktopCPUs, "Invalid CPU. Allowed values: i5 or i7.");
 
-        return new Computer(CPU,RAM,disk);
+        // Get and validate RAM
+        DesktopRAM = getValidatedInput(s, "Enter RAM size (16 or 32 GB): ", validDesktopRAMs, "Invalid RAM size. Allowed values: 16 or 32.");
+
+        // Get and validate Disk
+        DesktopDisk = getValidatedInput(s, "Enter Disk size (512 or 1024 GB): ", validDesktopDisks, "Invalid Disk size. Allowed values: 512 or 1024.");
+
+        return new Computer(DesktopCPU, DesktopRAM, DesktopDisk);
 
     } //End of getComputerData
+
+    //Create a Validate input function for desktop
+    private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getValidatedInput'");
+    }
 
 
 } //End of ManageComputer class
