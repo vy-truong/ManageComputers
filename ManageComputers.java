@@ -167,23 +167,24 @@ public class ManageComputers {
 
     //-----------------------------
     //Delete a specified computer from the ArrayList
-    private static void deleteComputer(ArrayList<Computer> computers, Scanner s) {
-        int computerListNumberToDelete=0;
 
+    // Method to delete a computer from the list
+    private static void deleteComputer(ArrayList<Computer> computers, Scanner s) {
         System.out.println("DELETE COMPUTER:-");
 
-        System.out.print("Enter number of computer to delete:");
-        computerListNumberToDelete = Integer.parseInt(s.nextLine());
+        // Display the list of computers and prompt for the number of the computer to delete
+        System.out.print("Enter number of computer to delete: ");
+        int computerListNumberToDelete = Integer.parseInt(s.nextLine());
 
-        //Check if computer list number is valid before deleting computer from list
-        if (computerListNumberToDelete>=1 && computerListNumberToDelete<=computers.size()) {
-            //Subtract 1 to get ArrayList index from on-screen list number to create correct index in ArrayList to delete
-            computers.remove(computerListNumberToDelete-1); 
-        }   
-        else {
+        // Check if the provided number is within the valid range of the list
+        if (computerListNumberToDelete >= 1 && computerListNumberToDelete <= computers.size()) {
+            // Subtract 1 to get the correct index in the list (ArrayList is zero-based)
+            computers.remove(computerListNumberToDelete - 1);
+            System.out.println("Computer deleted successfully.");
+        } else {
+            // If the number is invalid, display an error message
             System.out.println("Invalid computer number entered!");
         }
-
     } //End of deleteComputer
 
     //-----------------------------
