@@ -229,13 +229,10 @@ public class ManageComputers {
 
                     //Get reference to the object in ArrayList<Computer> to edit
                     //Cast Computer to Laptop for setScreenSize call a few lines of code later
-                    Laptop laptopToEdit = (Laptop)computers.get(computerListNumberToEdit-1);
+                    Laptop editedLaptop  = new Laptop(tempComputer.getCPU(),tempComputer.getRam(),tempComputer.getDisk(),screenSize)
 
-                    //Use setter methods to change mutable object state
-                    laptopToEdit.setCPU(tempComputer.getCPU());
-                    laptopToEdit.setRAM(tempComputer.getRAM());
-                    laptopToEdit.setDisk(tempComputer.getDisk());
-                    laptopToEdit.setScreenSize(screenSize);
+computers.set(computerListNumberToEdit-1,editedLaptop.getComputer())
+
 
                     break;
 
@@ -249,16 +246,8 @@ public class ManageComputers {
 
                     System.out.print("Enter GPU:");
                     String GPUType = s.nextLine();
-
-                    //Get reference to the object in ArrayList<Computer> to edit
-                    //Cast Computer to Laptop for setScreenSize call a few lines of code later
-                    Desktop desktopToEdit = (Desktop)computers.get(computerListNumberToEdit-1);
-
-                    //Use setter methods to change mutable object state
-                    desktopToEdit.setCPU(tempComputer.getCPU());
-                    desktopToEdit.setRAM(tempComputer.getRAM());
-                    desktopToEdit.setDisk(tempComputer.getDisk());
-                    desktopToEdit.setGPUType(GPUType);
+                    Desktop EditedDesktop = new Desktop(tempComputer, GPUType)
+                    computers.set(computerListNumberToEdit-1,EditedDesktop.getComputer())
 
                     break;
 
@@ -301,10 +290,33 @@ public class ManageComputers {
     } //End of getComputerData
 
     //Create a Validate input function for desktop
-    private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getValidatedInput'");
-    }
+   private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
+        String input;
+boolean isValidInput = false;
+
+do {
+        // Display the prompt to the user
+        System.out.print(string);
+        input = s.nextLine().toLowerCase();  // Convert input to lowercase for case-insensitive comparison
+
+        // Check if the input is valid by comparing it against valid options
+        for (String option : validDesktopDisks) {
+            if (input.equals(option.toLowerCase())) {
+                isValidInput = true;
+                break;
+            }
+        }
+
+        // If the input is not valid, display an error message
+        if (!isValidInput) {
+            System.out.println(string2);
+        }
+
+    } while (!isValidInput);  // Repeat until valid input is entered
+
+    return input;  // Return the valid input
+}
+
 
 
 } //End of ManageComputer class
