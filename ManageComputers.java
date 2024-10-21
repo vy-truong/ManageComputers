@@ -11,7 +11,7 @@ public class ManageComputers {
         //This ArrayList will hold ALL THE COMPUTERS in the system. Note that the type of objects expected in this
         //ArrayList are Computer, NOT Laptop or Desktop, but since those are subclasses of Computer they can be
         //stored in an ArrayLiust<Computer> anyway.
-        ArrayList<Computer> computers = new ArrayList<Computer>(); 
+        ArrayList<Object> computers = new ArrayList<Object>();
 
 
         //(System.in) = The "standard" input stream. This stream is already open and ready to supply input data. 
@@ -94,19 +94,25 @@ public class ManageComputers {
     //------------------------------
 
     //Show data for all laptops and desktops stored in ArrayList<Computer> create in main() method
-    private static void showComputers(ArrayList<Computer> computers) {
+    private static void showComputers(ArrayList<Object> computers) {
         int computerListNumber=0; //This variable is used to hold the "list number" for each computer, starting at 1.
 
         System.out.println("=========");
 
         System.out.println("LIST OF COMPUTERS:-");
 
-        for (Computer c: computers) {  
+        for (Object c: computers) {
 
             computerListNumber++; //Increment list number for each computer
 
             //Call overridden toString() method for current object to get and display its data
-            System.out.println(computerListNumber + ": " + c.toString());
+            if(c instanceof Laptop){
+                System.out.println(computerListNumber + ": " + ((Laptop)c).toString());
+            }
+            else if(c instanceof Desktop){
+                System.out.println(computerListNumber + ": " + ((Desktop)c).toString());
+            }
+
         }
 
         System.out.println("=========");
@@ -116,7 +122,7 @@ public class ManageComputers {
     
     //-----------------------------
     //Add a new Laptop or Desktop computer to the ArrayList<Computer>
-    private static void addComputer(ArrayList<Computer> computers, Scanner s) {
+    private static void addComputer(ArrayList<Object> computers, Scanner s) {
         String computerType="";
 
         Computer tempComputer=null;
@@ -130,30 +136,30 @@ public class ManageComputers {
         switch(computerType) {
 
             //Add a laptop
-            case "l": 
+            case "l":
 
                 //Get CPU, RAM and Disk info
-                tempComputer = getComputerData(s); 
+                tempComputer = getComputerData(s);
 
                 System.out.print("Enter screen size:");
                 String screenSize = s.nextLine();
 
                 //Add new Laptop to ArrayList in main() method
-                computers.add(new Laptop(tempComputer.getCPU(),tempComputer.getRAM(),tempComputer.getDisk(),screenSize)); 
+                computers.add(new Laptop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), screenSize));
 
                 break;
-            
-            //Add a desktop    
-            case "d": 
 
-            //Get CPU, RAM and Disk info
-                tempComputer = getComputerData(s); 
+            //Add a desktop
+            case "d":
+
+                //Get CPU, RAM and Disk info
+                tempComputer = getComputerData(s);
 
                 System.out.print("Enter GPU:");
                 String GPUType = s.nextLine();
 
                 //Add new Desktop to ArrayList in main() method
-                computers.add(new Desktop(tempComputer.getCPU(),tempComputer.getRAM(),tempComputer.getDisk(),GPUType)); 
+                computers.add(new Desktop(tempComputer,GPUType));
 
                 break;
 
@@ -166,10 +172,9 @@ public class ManageComputers {
     } //End of addComputer
 
     //-----------------------------
-    //Delete a specified computer from the ArrayList
 
     // Method to delete a computer from the list
-    private static void deleteComputer(ArrayList<Computer> computers, Scanner s) {
+    private static void deleteComputer(ArrayList<Object> computers, Scanner s) {
         System.out.println("DELETE COMPUTER:-");
 
         // Display the list of computers and prompt for the number of the computer to delete
@@ -190,7 +195,7 @@ public class ManageComputers {
     //-----------------------------
     //Edit a computer. Since Laptop and Desktop are mutable classses/object get new data values and replace old
     //attribute values in object being edited using object setter methods
-    private static void editComputer(ArrayList<Computer> computers, Scanner s) {
+    private static void editComputer(ArrayList<Object> computers, Scanner s) {
         int computerListNumberToEdit=0;
         String computerType="";
         Computer tempComputer=null;
