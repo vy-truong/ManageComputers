@@ -73,7 +73,7 @@ public class ManageComputers {
     System.out.println("A) Add Computer");
     System.out.println("D) Delete Computer");
     System.out.println("E) Edit Computer");
-    System.out.println("X) eXit");
+    System.out.println("X) Exit");
     System.out.println("----------");
 
     //Get menu selection from keyboard
@@ -139,9 +139,7 @@ public class ManageComputers {
 
         //Get CPU, RAM and Disk info
         tempComputer = getComputerData(s);
-
-        System.out.print("Enter screen size:");
-        String screenSize = s.nextLine();
+        String screenSize = screenGPU(s, "laptop");
 
         //Add new Laptop to ArrayList in main() method
         computers.add(new Laptop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), screenSize));
@@ -153,9 +151,7 @@ public class ManageComputers {
 
         //Get CPU, RAM and Disk info
         tempComputer = getComputerData(s);
-
-        System.out.print("Enter GPU:");
-        String GPUType = s.nextLine();
+        String GPUType = screenGPU(s, "desktop");
 
         //Add new Desktop to ArrayList in main() method
         computers.add(new Desktop(tempComputer, GPUType));
@@ -228,15 +224,13 @@ public class ManageComputers {
 
           //Get CPU, RAM and Disk info, store in temporary Computer-type object
           tempComputer = getComputerData(s);
-
-          System.out.print("Enter screen size:");
-          String screenSize = s.nextLine();
+          String screenSize = screenGPU(s, "laptop");
 
           //Get reference to the object in ArrayList<Computer> to edit
           //Cast Computer to Laptop for setScreenSize call a few lines of code later
           Laptop editedLaptop = new Laptop(tempComputer.getCPU(), tempComputer.getRAM(), tempComputer.getDisk(), screenSize);
 
-          computers.set(computerListNumberToEdit - 1, editedLaptop.getComputer());
+          computers.set(computerListNumberToEdit - 1, editedLaptop);
 
 
           break;
@@ -248,11 +242,10 @@ public class ManageComputers {
 
           //Get CPU, RAM and Disk info
           tempComputer = getComputerData(s);
+          String GPUType = screenGPU(s, "desktop");
 
-          System.out.print("Enter GPU:");
-          String GPUType = s.nextLine();
           Desktop EditedDesktop = new Desktop(tempComputer, GPUType);
-          computers.set(computerListNumberToEdit - 1, EditedDesktop.getComputer());
+          computers.set(computerListNumberToEdit - 1, EditedDesktop);
 
           break;
 
@@ -292,6 +285,18 @@ public class ManageComputers {
     return new Computer(DesktopCPU, DesktopRAM, DesktopDisk);
 
   } //End of getComputerData
+
+  private static String screenGPU(Scanner s, String computerType) {
+    String[] validScreen = {"13", "14"};
+    String[] validGPU = {"Nvidia", "AMD"};
+    switch (computerType) {
+      case "laptop":
+        return getValidatedInput(s, "Enter screen size (13 or 14): ", validScreen, "Invalid screen size. Please choose between: 13 or 14.");
+      case "desktop":
+        return getValidatedInput(s, "Enter GPU (Nvidia or AMD): ", validGPU, "Invalid GPU. Please choose between: Nvidia or AMD.");
+    }
+    return null;
+  }
 
   //Create a Validate input function for desktop
   private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
