@@ -172,24 +172,24 @@ public class ManageComputers {
     } //End of addComputer
 
     //-----------------------------
-    //Delete a specified computer from the ArrayList
-    private static void deleteComputer(ArrayList<Object> computers, Scanner s) {
-        int computerListNumberToDelete=0;
 
+    // Method to delete a computer from the list
+    private static void deleteComputer(ArrayList<Object> computers, Scanner s) {
         System.out.println("DELETE COMPUTER:-");
 
-        System.out.print("Enter number of computer to delete:");
-        computerListNumberToDelete = Integer.parseInt(s.nextLine());
+        // Display the list of computers and prompt for the number of the computer to delete
+        System.out.print("Enter number of computer to delete: ");
+        int computerListNumberToDelete = Integer.parseInt(s.nextLine());
 
-        //Check if computer list number is valid before deleting computer from list
-        if (computerListNumberToDelete>=1 && computerListNumberToDelete<=computers.size()) {
-            //Subtract 1 to get ArrayList index from on-screen list number to create correct index in ArrayList to delete
-            computers.remove(computerListNumberToDelete-1); 
-        }   
-        else {
+        // Check if the provided number is within the valid range of the list
+        if (computerListNumberToDelete >= 1 && computerListNumberToDelete <= computers.size()) {
+            // Subtract 1 to get the correct index in the list (ArrayList is zero-based)
+            computers.remove(computerListNumberToDelete - 1);
+            System.out.println("Computer deleted successfully.");
+        } else {
+            // If the number is invalid, display an error message
             System.out.println("Invalid computer number entered!");
         }
-
     } //End of deleteComputer
 
     //-----------------------------
@@ -235,13 +235,10 @@ public class ManageComputers {
 
                     //Get reference to the object in ArrayList<Computer> to edit
                     //Cast Computer to Laptop for setScreenSize call a few lines of code later
-                    Laptop laptopToEdit = (Laptop)computers.get(computerListNumberToEdit-1);
+                    Laptop editedLaptop  = new Laptop(tempComputer.getCPU(),tempComputer.getRam(),tempComputer.getDisk(),screenSize)
 
-                    //Use setter methods to change mutable object state
-                    laptopToEdit.setCPU(tempComputer.getCPU());
-                    laptopToEdit.setRAM(tempComputer.getRAM());
-                    laptopToEdit.setDisk(tempComputer.getDisk());
-                    laptopToEdit.setScreenSize(screenSize);
+computers.set(computerListNumberToEdit-1,editedLaptop.getComputer())
+
 
                     break;
 
@@ -255,16 +252,8 @@ public class ManageComputers {
 
                     System.out.print("Enter GPU:");
                     String GPUType = s.nextLine();
-
-                    //Get reference to the object in ArrayList<Computer> to edit
-                    //Cast Computer to Laptop for setScreenSize call a few lines of code later
-                    Desktop desktopToEdit = (Desktop)computers.get(computerListNumberToEdit-1);
-
-                    //Use setter methods to change mutable object state
-                    desktopToEdit.setCPU(tempComputer.getCPU());
-                    desktopToEdit.setRAM(tempComputer.getRAM());
-                    desktopToEdit.setDisk(tempComputer.getDisk());
-                    desktopToEdit.setGPUType(GPUType);
+                    Desktop EditedDesktop = new Desktop(tempComputer, GPUType)
+                    computers.set(computerListNumberToEdit-1,EditedDesktop.getComputer())
 
                     break;
 
@@ -307,10 +296,33 @@ public class ManageComputers {
     } //End of getComputerData
 
     //Create a Validate input function for desktop
-    private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getValidatedInput'");
-    }
+   private static String getValidatedInput(Scanner s, String string, String[] validDesktopDisks, String string2) {
+        String input;
+boolean isValidInput = false;
+
+do {
+        // Display the prompt to the user
+        System.out.print(string);
+        input = s.nextLine().toLowerCase();  // Convert input to lowercase for case-insensitive comparison
+
+        // Check if the input is valid by comparing it against valid options
+        for (String option : validDesktopDisks) {
+            if (input.equals(option.toLowerCase())) {
+                isValidInput = true;
+                break;
+            }
+        }
+
+        // If the input is not valid, display an error message
+        if (!isValidInput) {
+            System.out.println(string2);
+        }
+
+    } while (!isValidInput);  // Repeat until valid input is entered
+
+    return input;  // Return the valid input
+}
+
 
 
 } //End of ManageComputer class
